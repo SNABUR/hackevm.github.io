@@ -135,7 +135,7 @@ const ETHPage = () => {
             </button>
           </div>
         </div>
-  
+
         <div className="flex flex-col items-center mt-3 text-center">
           <p className="text-sm text-gray-600 mb-2">
           made with ❤️ by GG
