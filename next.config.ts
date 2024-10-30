@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   webpack: (config) => {
-    config.experiments = { asyncWebAssembly: true, layers: true };
+    config.experiments = { asyncWebAssembly: true };
 
     config.module.rules.push({
       test: /\.wasm$/,
