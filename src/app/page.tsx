@@ -8,9 +8,9 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Image from 'next/image';
 
 const BTCPage = () => {
-  const [inputText, setInputText] = useState('');
-  const [BTCAddress, setBTCAddress] = useState('');
-  const [privateKey, setPrivateKey] = useState('');
+  const [inputText, setInputText] = useState('Satoshi Nakamoto');
+  const [BTCAddress, setBTCAddress] = useState('17ZYZASydeA1xyfNrcYcLyqghmK3eGJpHq');
+  const [privateKey, setPrivateKey] = useState('a0dc65ffca799873cbea0ac274015b9526505daaaed385155425f7337704883e');
   const [showPrivateKey, setShowPrivateKey] = useState(false);
   const [addressType, setAddressType] = useState('P2PKH'); // Estado para el tipo de dirección
 
@@ -51,12 +51,18 @@ const BTCPage = () => {
     navigator.clipboard.writeText(text).catch(err => console.error('Failed to copy text: ', err));
   };
 
+  const handleAddressTypeChange = (type: string) => {
+    setAddressType(type);
+    generateAddress(inputText); // Generar la dirección cada vez que cambia el tipo
+  };
+
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center font-hacker justify-center">
       <div className="flex flex-col bg-white shadow-lg rounded-lg p-8 w-full max-w-md items-center">
         <div className="flex flex-col items-center mb-6">
-          <Image src={btc.src} alt="Bitcoin Logo" width={28} height={28} />
-          <h1 className="text-3xl font-bold text-gray-800 text-center">Bitcoin Wallet Generator</h1>
+          <Image className='mb-3' src={btc.src} alt="Bitcoin Logo" width={64} height={64} />
+          <h1 className="text-3xl font-bold text-gray-800 text-center">Hack Bitcoin</h1>
         </div>
 
         <div className="w-full mb-4">
@@ -64,16 +70,16 @@ const BTCPage = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">Insert Text:</label>
             <div className="flex items-center mb-4">
             <button
-              className={`py-1 px-3 text-xs rounded-l-lg transition duration-200 ${addressType === 'P2PKH' ? 'bg-black text-white' : 'bg-gray-300 text-black'}`}
-              onClick={() => setAddressType('P2PKH')}
+              className={`py-1 px-3 text-xs rounded-l-lg transition duration-200 ${addressType === 'P2PKH' ? 'bg-orange-400 text-white' : 'bg-orange-100 text-black'}`}
+              onClick={() => handleAddressTypeChange('P2PKH')}
             >
               A
             </button>
             <button
-              className={`py-1 px-3  text-xs rounded-r-lg transition duration-200 ${addressType === 'BECH32' ? 'bg-black text-white' : 'bg-gray-300 text-black'}`}
-              onClick={() => setAddressType('BECH32')}
+              className={`py-1 px-3  text-xs rounded-r-lg transition duration-200 ${addressType === 'BECH32' ? 'bg-orange-400 text-white' : 'bg-orange-100 text-black'}`}
+              onClick={() => handleAddressTypeChange('BECH32')}
             >
-              b
+              B
             </button>
           </div>
         </div>
@@ -81,7 +87,7 @@ const BTCPage = () => {
             className="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 h-24 focus:ring-blue-500 text-black text-sm"
             value={inputText}
             onChange={handleInputChange}
-            placeholder="Enter text here"
+            placeholder="Satoshi Nakamoto"
           />
         </div>
 
@@ -90,7 +96,7 @@ const BTCPage = () => {
 
 
         <button
-          className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-1 hover:bg-blue-700 transition w-64 active:scale-95 duration-200"
+          className="bg-orange-400 text-white py-2 px-4 rounded-lg mt-1 hover:bg-blue-700 transition w-64 active:scale-95 duration-200"
           onClick={() => generateAddress(inputText)} // Llama a la función para generar la dirección
         >
           GENERATE WALLET
@@ -99,14 +105,12 @@ const BTCPage = () => {
         <div className="w-full mt-6">
           <div className="flex items-center justify-start mb-2">
             <label className="text-sm font-medium text-gray-700">BTC Address:</label>
-            <a
-              className="p-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
-              href={`https://www.blockchain.com/explorer/addresses/btc/${BTCAddress}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
+              onClick={() => copyToClipboard(BTCAddress)}
             >
-              <Image src={blockchain.src} alt="Blockchain" width={20} height={20} />
-            </a>
+              <Image src={copy.src} alt="Copy" width={16} height={16} />
+            </button>
           </div>
 
           <div className="flex items-center gap-2 mb-4">
@@ -115,12 +119,15 @@ const BTCPage = () => {
               readOnly
               value={BTCAddress}
             />
-            <button
-              className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
-              onClick={() => copyToClipboard(BTCAddress)}
+                        <a
+              className="rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
+              href={`https://www.blockchain.com/explorer/addresses/btc/${BTCAddress}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Image src={copy.src} alt="Copy" width={20} height={20} />
-            </button>
+              <Image src={blockchain.src} alt="Blockchain" width={26} height={26} />
+            </a>
+
           </div>
         </div>
 
@@ -128,11 +135,12 @@ const BTCPage = () => {
           <div className="flex items-center justify-start mb-2">
             <label className="text-sm font-medium text-gray-700">Private Key:</label>
             <button
-              className="p-1 rounded-xl hover:bg-gray-300 transition duration-200 active:scale-90 focus:outline-none"
-              onClick={() => setShowPrivateKey(!showPrivateKey)}
+              className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
+              onClick={() => copyToClipboard(privateKey)}
             >
-              {showPrivateKey ? <FaEye className="text-black" /> : <FaEyeSlash className="text-black" />}
+              <Image src={copy.src} alt="Copy" width={16} height={16} />
             </button>
+
           </div>
 
           <div className="flex items-center gap-2 mb-4">
@@ -142,25 +150,42 @@ const BTCPage = () => {
               value={showPrivateKey ? privateKey : '*'.repeat(privateKey.length)}
             />
             <button
-              className="bg-gray-200 py-1 px-2 rounded-lg hover:bg-gray-300 transition duration-200 active:scale-95"
-              onClick={() => copyToClipboard(privateKey)}
+              className="p-1 rounded-xl hover:bg-gray-300 transition duration-200 active:scale-90 focus:outline-none"
+              onClick={() => setShowPrivateKey(!showPrivateKey)}
             >
-              <Image src={copy.src} alt="Copy" width={20} height={20} />
+            {showPrivateKey ? <FaEye className="text-black w-6 h-6" /> : <FaEyeSlash className="text-black w-6 h-6" />}
             </button>
           </div>
         </div>
-        <div
-            className="flex bg-gray-200 items-center space-x-1 rounded-lg p-1 cursor-pointer transition duration-200"
-            onClick={() => copyToClipboard("0x3d90Eb79C1e753Ca51D1447791C07e7CcC219e5C")}
+        <div className="flex flex-col items-center mt-3 text-center">
+          <p className="text-sm text-gray-600 mb-2">
+          made with ❤️ by GG
+
+          </p>
+          <p className="text-2sm text-gray-600 font-bold mb-2">
+            Airdrop:  
+            <a 
+              href="https://ggeese.fun" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-blue-500 font-bold hover:underline"
+            >
+              ggeese.fun
+            </a>
+          </p>
+          <div
+            className="flex items-center space-x-1 rounded-lg p-1 cursor-pointer transition duration-200"
+            onClick={() => copyToClipboard("bc1q2qdqw82tqmt6ctt6ydr7lxg3mrg4ps4l6a6m9m")}
           >
-            <span className="text-gray-700 text-xs transition duration-200 active:scale-95">0x3d90Eb79C1e753Ca51D1447791C07e7CcC219e5C</span>
+            <span className="text-gray-700 text-xs transition duration-200 active:scale-95">bc1q2qdqw82tqmt6ctt6ydr7lxg3mrg4ps4l6a6m9m</span>
             <button
               className="p-2 rounded-lg transition duration-200 active:scale-90 focus:outline-none"
               aria-label="Copy to clipboard"
             >
-              <Image src={copy.src} alt="Copy" width={20} height={20} />
+              <Image src={copy.src} alt="Copy" width={12} height={12} />
             </button>
           </div>
+        </div>
       </div>
     </div>
   );

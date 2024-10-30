@@ -1,15 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Otras opciones de configuración aquí
-  output: 'export', // Asegúrate de agregar esta línea para exportar como archivos estáticos.
+  output: 'export',
   webpack: (config) => {
     // Habilitar soporte para WebAssembly y capas
     config.experiments = {
       asyncWebAssembly: true,
       syncWebAssembly: true,
-      layers: true, // Habilitar la opción de capas
+      layers: true,
     };
+    // Configura el tipo de archivo para WebAssembly
+    config.module.rules.push({
+      test: /\.wasm$/,
+      type: "webassembly/async",
+    });
 
     return config;
   },
