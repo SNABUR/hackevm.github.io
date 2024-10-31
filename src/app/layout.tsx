@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "HackBTC",
+  title: "HackETH",
   description: "Create Wallets using text",
 };
 
