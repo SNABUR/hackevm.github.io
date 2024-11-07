@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { keccak256 } from 'js-sha3';
 import { ethers } from 'ethers';
 import copy from '../images/copy.svg';
+import airdrop from '../images/airdrop.svg';
 import etherscan from '../images/etherscan_logo.svg';
 import eth from '../images/ethereum.svg';
 import Image from 'next/image';
@@ -60,10 +61,19 @@ const ETHPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center font-hacker justify-center">
-      <div className="flex flex-col bg-white shadow-lg rounded-lg p-8 w-full max-w-md items-center">
+      <div className="flex flex-col bg-white shadow-lg rounded-lg p-8 w-full max-w-md items-center relative">
+      <a href="https://t.me/ggeese_bot" target="_blank" rel="noopener noreferrer">
+          <Image
+            className="absolute top-0 right-0 cursor-pointer animate-pulse"
+            src={airdrop.src}
+            alt="Airdrop Icon"
+            width={64}
+            height={64}
+          />
+        </a>
         <div className="flex flex-col items-center mb-6">
           <Image className='mb-3' src={eth.src} alt="Ethereum Logo" width={64} height={64} />
-          <h1 className="text-3xl font-bold text-gray-800 text-center">Hack Ethereum</h1>
+          <h1 className="text-3xl font-bold text-gray-800 text-center">Free Ethereum</h1>
         </div>
   
         <div className="w-full mb-4">
@@ -144,7 +154,6 @@ const ETHPage = () => {
 
           </p>
           <p className="text-2sm text-gray-600 font-bold mb-2">
-            Airdrop:  
             <a 
               href="https://ggeese.fun" 
               target="_blank" 
