@@ -155,12 +155,12 @@ const ETHPage = () => {
           </p>
           <p className="text-2sm text-gray-600 font-bold mb-2">
             <a 
-              href="https://ggeese.fun" 
+              href="https://goosey.fun" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-blue-500 font-bold hover:underline"
             >
-              ggeese.fun
+              goosey.fun
             </a>
           </p>
           <div
